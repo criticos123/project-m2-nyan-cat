@@ -12,7 +12,8 @@ class Engine {
     // Please refer to Player.js for more information about what happens when you create a player
     this.player = new Player(this.root);
     this.counter = 0;
-    this.score = new Text(this.root, "435px", "50px");
+    this.score = new Text(this.root, "500px", "50px");
+    this.gamefinished = false;
 
     // Initially, we have no enemies in the game. The enemies property refers to an array
     // that contains instances of the Enemy class
@@ -40,7 +41,9 @@ class Engine {
     // We use the number of milliseconds since the last call to gameLoop to update the enemy positions.
     // Furthermore, if any enemy is below the bottom of our game, its destroyed property will be set. (See Enemy.js)
     this.enemies.forEach((enemy) => {
-      enemy.update(timeDiff);
+      if (this.gamefinished === false) {
+        enemy.update(timeDiff);
+      }
     });
 
     // We remove all the destroyed enemies from the array referred to by \`this.enemies\`.
@@ -67,6 +70,7 @@ class Engine {
     // We check if the player is dead. If he is, we alert the user
     // and return from the method (Why is the return statement important?)
     if (this.isPlayerDead()) {
+      this.gamefinished = true;
       let gameover = document.createElement("h2");
       gameover.style.color = "Red";
       gameover.style.fontSize = "50px";
@@ -77,7 +81,6 @@ class Engine {
       let cheer = document.querySelector(".cheer");
       cheer.play();
       document.removeEventListener("keydown", keydownHandler);
-      return;
     }
     let counter = 0;
     if (this.isEnemyDead()) {
@@ -86,7 +89,11 @@ class Engine {
     }
 
     // If the player is not dead, then we put a setTimeout to run the gameLoop in 20 milliseconds
-    setTimeout(this.gameLoop, 20);
+    if (this.gamefinished === false) {
+      setTimeout(this.gameLoop, 20);
+    } else {
+      return;
+    }
   };
 
   // This method is not implemented correctly, which is why
@@ -111,10 +118,10 @@ class Engine {
     this.player.lasers.forEach((event, index) => {
       this.enemies.forEach((enemy1, index) => {
         if (
-          event.x < enemy1.x + ENEMY_WIDTH &&
-          event.x + LASER_WIDTH > enemy1.x &&
-          event.y < enemy1.y + ENEMY_HEIGHT - 5 &&
-          event.y + LASER_HEIGHT - 5 > enemy1.y
+          event.x < enemy1.x + ENEMY_WIDTH - 8 &&
+          event.x + LASER_WIDTH - 8 > enemy1.x &&
+          event.y < enemy1.y + ENEMY_HEIGHT - 8 &&
+          event.y + LASER_HEIGHT - 8 > enemy1.y
         ) {
           enemydead = true;
           enemy1.destroy();

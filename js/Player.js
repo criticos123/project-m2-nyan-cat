@@ -46,5 +46,7 @@ class Player {
   }
   fireLaser() {
     this.lasers.push(new Laser(this.root, this.x, this.y));
+    let blaster = document.querySelector(".blaster");
+    blaster.play();
   }
 }
