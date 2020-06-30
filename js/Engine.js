@@ -11,9 +11,13 @@ class Engine {
     // We create our hamburger.
     // Please refer to Player.js for more information about what happens when you create a player
     this.player = new Player(this.root);
+    this.counter = 0;
+    this.score = new Text(this.root, "435px", "50px");
+
     // Initially, we have no enemies in the game. The enemies property refers to an array
     // that contains instances of the Enemy class
     this.enemies = [];
+
     // We add the background image to the game
     addBackground(this.root);
   }
@@ -25,6 +29,7 @@ class Engine {
     // This code is to see how much time, in milliseconds, has elapsed since the last
     // time this method was called.
     // (new Date).getTime() evaluates to the number of milliseconds since January 1st, 1970 at midnight.
+    this.score.update("EWOKS HUNTED: " + this.counter);
     if (this.lastFrame === undefined) {
       this.lastFrame = new Date().getTime();
     }
@@ -43,6 +48,12 @@ class Engine {
     // Remember: this.enemies only contains instances of the Enemy class.
     this.enemies = this.enemies.filter((enemy) => {
       return !enemy.destroyed;
+    });
+    this.player.lasers.forEach((laser) => {
+      laser.update(timeDiff);
+    });
+    this.player.lasers.filter((laser) => {
+      return !laser.destroyed;
     });
 
     // We need to perform the addition of enemies until we have enough enemies.
@@ -63,7 +74,15 @@ class Engine {
       gameover.style.top = "180px";
       gameover.innerText = "GAME OVER";
       document.body.appendChild(gameover);
+      let cheer = document.querySelector(".cheer");
+      cheer.play();
+      document.removeEventListener("keydown", keydownHandler);
       return;
+    }
+    let counter = 0;
+    if (this.isEnemyDead()) {
+      let sound = document.querySelector(".sound");
+      sound.play();
     }
 
     // If the player is not dead, then we put a setTimeout to run the gameLoop in 20 milliseconds
@@ -85,5 +104,26 @@ class Engine {
       }
     });
     return isDead;
+  };
+  isEnemyDead = () => {
+    let enemydead = false;
+
+    this.player.lasers.forEach((event, index) => {
+      this.enemies.forEach((enemy1, index) => {
+        if (
+          event.x < enemy1.x + ENEMY_WIDTH &&
+          event.x + LASER_WIDTH > enemy1.x &&
+          event.y < enemy1.y + ENEMY_HEIGHT - 5 &&
+          event.y + LASER_HEIGHT - 5 > enemy1.y
+        ) {
+          enemydead = true;
+          enemy1.destroy();
+          this.counter++;
+          return this.counter;
+        }
+      });
+    });
+    console.log(this.counter);
+    return enemydead;
   };
 }

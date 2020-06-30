@@ -8,16 +8,19 @@ class Player {
     // store the data in a property of the instance. It represents the distance from the left margin of the browsing area to
     // the leftmost x position of the image.
     this.x = 2 * PLAYER_WIDTH;
-
+    this.root = root;
+    this.lasers = [];
     // The y position never changes, so we don't need to store it in a property. It represents the y position of the top of the
     // hamburger. The y position is the distance from the top margin of the browsing area.
-    this.y = GAME_HEIGHT - PLAYER_HEIGHT - 10;
+    this.y = GAME_HEIGHT - PLAYER_HEIGHT;
 
     // We create a DOM node. We will be updating the DOM node every time we move the player, so we store a reference to the
     // DOM node in a property.
     this.domElement = document.createElement("img");
-    this.domElement.src = "images/player.png";
+    this.domElement.src = "images/atst.png";
     this.domElement.style.position = "absolute";
+    this.domElement.style.width = PLAYER_WIDTH;
+    this.domElement.style.height = PLAYER_HEIGHT;
     this.domElement.style.left = `${this.x}px`;
     this.domElement.style.top = ` ${this.y}px`;
     this.domElement.style.zIndex = "10";
@@ -40,5 +43,8 @@ class Player {
       this.x = this.x + PLAYER_WIDTH;
     }
     this.domElement.style.left = `${this.x}px`;
+  }
+  fireLaser() {
+    this.lasers.push(new Laser(this.root, this.x, this.y));
   }
 }

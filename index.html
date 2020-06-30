@@ -1,33 +1,57 @@
 <html>
   <head>
     <title>Nyan Kat</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   </head>
   <body>
     <div id="app">
-      <audio class="music" crossorigin="anonymous" src="Nyancat.mp3"></audio>
+      <audio class="music" src="music/Parade of the Ewoks.mp3"></audio>
+      <audio
+        class="sound"
+        src="music/Lego Star Wars Ewok Death Sound.mp3"
+      ></audio>
+      <audio class="cheer" src="music/Hilarious Ewok Horns.mp3"></audio>
     </div>
-    <button class="restart" onClick="window.location.reload();">
-      restart
-    </button>
-    <button class="start">start</button>
+    <div class="textClass">
+      <h3 class="textone">Click Start to start the game</h3>
+      <h3 class="texttwo">Click reset to reset the game</h3>
 
+      <button class="restart" onClick="window.location.reload();">
+        reset
+      </button>
+      <button class="start">start</button>
+    </div>
     <script src="js/data.js"></script>
+    <script src="js/Text.js"></script>
     <script src="js/Enemy.js"></script>
     <script src="js/engine-utilities.js"></script>
     <script src="js/Engine.js"></script>
     <script src="js/Player.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/laser.js"></script>
   </body>
   <style>
-    .restart {
-      top: 550px;
+    body {
+      overflow: hidden;
+      align-items: center;
+    }
+    .textClass {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       position: absolute;
-      left: 405px;
+      margin: 0px;
+      left: 455px;
+      top: 300px;
+    }
+    .restart {
+      padding: 10px;
+      border-radius: 5px;
+      margin-bottom: 10px;
     }
     .start {
-      top: 400px;
-      position: absolute;
-      left: 405px;
+      padding: 10px;
+      border-radius: 5px;
     }
   </style>
 </html>
