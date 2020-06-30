@@ -88,7 +88,10 @@ class Engine {
       let sound = document.querySelector(".sound");
       sound.play();
     }
-
+    //after ten seconds more ewoks will show up
+    setInterval(function () {
+      MAX_ENEMIES = 3;
+    }, 10000);
     // If the player is not dead, then we put a setTimeout to run the gameLoop in 20 milliseconds
     if (this.gamefinished === false) {
       setTimeout(this.gameLoop, 20);

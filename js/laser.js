@@ -15,7 +15,7 @@ class Laser {
     this.domElement.style.zIndex = 5;
 
     this.root.appendChild(this.domElement);
-    this.speed = 0.4;
+    this.speed = 0.5;
   }
 
   update(timeDiff) {

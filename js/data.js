@@ -12,7 +12,7 @@ const GAME_HEIGHT = 540;
 // as well as the maximum number of enemies on screen at any given time.
 const ENEMY_WIDTH = 90;
 const ENEMY_HEIGHT = 90;
-const MAX_ENEMIES = 2;
+let MAX_ENEMIES = 1;
 //laser width and height
 const LASER_WIDTH = 50;
 const LASER_HEIGHT = 100;
