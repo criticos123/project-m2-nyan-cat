@@ -31,6 +31,7 @@ class Engine {
     // time this method was called.
     // (new Date).getTime() evaluates to the number of milliseconds since January 1st, 1970 at midnight.
     this.score.update("EWOKS HUNTED: " + this.counter);
+
     if (this.lastFrame === undefined) {
       this.lastFrame = new Date().getTime();
     }
